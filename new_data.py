@@ -18,6 +18,7 @@ import pandas as pd
 # from topic_dummies import get_data
 
 def predict(one_line):
+    #Expects one line df of new data
 
     def get_text(cell):
         return BeautifulSoup(cell, 'html.parser').get_text()
@@ -36,14 +37,14 @@ def predict(one_line):
             return prediction
     prediction = make_prediction(clean_text)
 
-    #df['predicted_topic'] = df['description'].apply(make_prediction)
+    one_line['predicted_topic'] = prediction
 
-    return prediction
+    return one_line
 
 
-# r = requests.get('http://galvanize-case-study-on-fraud.herokuapp.com/data_point')
-# data=json.loads(r.text)
-# one_line = pd.Series(data,index=data.keys()).to_frame().T
-#
-#
-# print predict(one_line)
+r = requests.get('http://galvanize-case-study-on-fraud.herokuapp.com/data_point')
+data=json.loads(r.text)
+one_line = pd.Series(data,index=data.keys()).to_frame().T
+
+
+print predict(one_line)
